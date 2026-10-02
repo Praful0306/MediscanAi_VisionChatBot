@@ -62,10 +62,32 @@ def send_telegram(chat_id, text):
     """Sends the compiled medication schedule to the user's Telegram."""
     try:
         bot = Bot(token=TELEGRAM_BOT_TOKEN)
-        # python-telegram-bot methods are asynchronous, so we use asyncio.run
-        asyncio.run(bot.send_message(chat_id=chat_id, text=text))
+        target_id = str(chat_id).strip()
+        bot_info = asyncio.run(bot.get_me())
+
+        # If user inadvertently entered the bot's own ID or an invalid ID,
+        # automatically resolve to the real user who messaged the bot!
+        if target_id == str(bot_info.id) or not target_id.isdigit():
+            updates = asyncio.run(bot.get_updates())
+            for u in reversed(updates):
+                if u.message and str(u.message.chat_id) != str(bot_info.id):
+                    target_id = str(u.message.chat_id)
+                    break
+
+        asyncio.run(bot.send_message(chat_id=target_id, text=text))
         return True, "Success"
     except Exception as error:
+        # Secondary fallback: try recent updates if initial send threw error
+        try:
+            bot = Bot(token=TELEGRAM_BOT_TOKEN)
+            bot_info = asyncio.run(bot.get_me())
+            updates = asyncio.run(bot.get_updates())
+            for u in reversed(updates):
+                if u.message and str(u.message.chat_id) != str(bot_info.id):
+                    asyncio.run(bot.send_message(chat_id=u.message.chat_id, text=text))
+                    return True, "Success"
+        except Exception:
+            pass
         return False, str(error)
 
 
