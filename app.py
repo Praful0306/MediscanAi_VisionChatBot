@@ -8,8 +8,8 @@ from prompts import SUMMARY_REQUEST_PROMPT, SYSTEM_PROMPT, WELCOME_MESSAGE_TEMPL
 # ==============================================================================
 # 1. Configuration & Model Setup
 # ==============================================================================
-# We use gemini-2.5-flash: high speed, multimodal (text + vision), and cost-efficient.
-MODEL_NAME = "gemini-3.5-flash"
+# We use gemini-3.5-flash-lite: lowest latency, minimal token footprint, and highest request limits.
+MODEL_NAME = "gemini-3.5-flash-lite"
 st.set_page_config(page_title="MediScan AI", page_icon="💊", layout="centered")
 
 # Read secrets from Streamlit secrets (configured locally in .streamlit/secrets.toml)
