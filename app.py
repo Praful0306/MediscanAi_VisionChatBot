@@ -81,7 +81,7 @@ if "onboarded" not in st.session_state:
         telegram_chat_id = st.text_input(
             "Telegram Chat ID",
             placeholder="e.g. 123456789",
-            help="Your numeric Telegram Chat ID. You can find yours easily by messaging @userinfobot on Telegram.",
+            help="Your numeric Telegram Chat ID to receive automated updates directly on Telegram.",
         )
         submitted = st.form_submit_button("Let's go 🚀")
 
