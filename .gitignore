@@ -1,0 +1,19 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Streamlit secrets (NEVER commit real API keys)
+.streamlit/secrets.toml
+
+# Operating System files
+Thumbs.db
+.DS_Store
+
+# Local Workshop PDFs & Notes
+*.pdf
